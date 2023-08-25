@@ -10,16 +10,10 @@
       "disabled": true,
       "settings": {
       }
-    },
-    "fdbd4cf6-4193-4558-b10c-0e398f261323": {
-      "type": "otp-login",
-      "settings": {
-      }
     }
   },
   "order": [
     "main",
-    "165460479522332vv3",
-    "fdbd4cf6-4193-4558-b10c-0e398f261323"
+    "165460479522332vv3"
   ]
 }
