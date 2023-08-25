@@ -1,0 +1,515 @@
+{% assign login_sub_title = section.settings.login_sub_title %}
+{% if login_sub_title == blank %}
+{% assign login_sub_title = "Enter your log in Credentials" %}
+{% endif %}
+{% assign login_title = section.settings.login_title %}
+{% if login_title == blank %}
+{% assign login_title = "Login with OTP" %}
+{% endif %}
+{% assign account_title = section.settings.account_title %}
+{% if account_title == blank %}
+{% assign account_title = "Account Details" %}
+{% endif %}
+{% assign otp_title = section.settings.otp_title %}
+{% if otp_title == blank %}
+{% assign otp_title = "Enter OTP" %}
+{% endif %}
+{% assign phone_placeholder = section.settings.phone_placeholder %}
+{% if phone_placeholder == blank %}
+{% assign phone_placeholder = "Phone number" %}
+{% endif %}
+{% assign email_placeholder = section.settings.email_placeholder %}
+{% if email_placeholder == blank %}
+{% assign email_placeholder = "Email id" %}
+{% endif %}
+{% assign whatsapp_placeholder = section.settings.whatsapp_placeholder %}
+{% if whatsapp_placeholder == blank %}
+{% assign whatsapp_placeholder = "Whatsapp number" %}
+{% endif %}
+{% assign marketing_text = section.settings.marketing_text %}
+{% if marketing_text == blank %}
+{% assign marketing_text = "keep me updated on new updates, exclusive offers, periodical blogs, and everything else on." %}
+{% endif %}
+
+{% assign default_country_selected = 'in' %}
+{% assign phone_enable = section.settings.phone_enable %}
+{% assign email_enable = section.settings.email_enable %}
+{% assign whatsapp_enable = section.settings.whatsapp_enable %}
+{% if phone_enable == false and email_enable == false and whatsapp_enable == false %}
+{% assign phone_enable = true %}
+{% assign email_enable = true %}
+{% assign whatsapp_enable = true %}
+{% endif %}
+{% assign marketing_options = shop.metafields["simply-otp-login"].marketing_option.value %}
+<style>
+  .otp-btn{
+    background-color: {% if section.settings.btn_bg_color %}{{section.settings.btn_bg_color}}{% else %}#1E418E{% endif %};
+  }
+  .otp-btn{
+    color: {% if section.settings.btn_text_color %}{{section.settings.btn_text_color}}{% else %}#FFFFFF{% endif %};
+  }
+  .otp-btn path{
+    stroke: {% if section.settings.btn_text_color %}{{section.settings.btn_text_color}}{% else %}#FFFFFF{% endif %};
+  }
+</style>
+
+{% capture country_html %}
+<div class="country-selector-main">
+  <div class="selected-country">
+    <div class="country-flag-box">
+      <span class="country-flag {{default_country_selected}}"></span>
+    </div>
+  </div>
+  <svg width="14" height="8" viewBox="0 0 14 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M1 1L7 7L13 1" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+</div>
+<ul class="country-selector-list" aria-label="List of countries">
+  <li class="{% if default_country_selected == 'in' %}active{% endif %}" data-dial-code="91" data-country-code="in">
+    <div class="country-flag-box">
+      <div class="country-flag in"></div>
+    </div>
+    <span class="country-name">India</span>
+    <span class="dial-code">+91</span>
+  </li>
+</ul>
+{% endcapture %}
+
+{% assign count = 0 %}
+{% assign active_otp_type = '' %}
+{% capture otp_type_html %}
+<div class="login-inputBox">
+  {% if phone_enable %}
+  {% if count == 0 %}
+  {% assign active_otp_type = 'mobile' %}
+  {% endif %}
+  <div class="input-box-content mobile-no-inner{% if count == 0 %} active{% endif %}" data-current="mobile">
+    {{ country_html }}
+    <input class="olInput user-name-input" placeholder="{{phone_placeholder}}" maxlength="10" name="phone" type="number"/>
+  </div>
+  {% assign count = count | plus: 1 %}
+  {% endif %}
+  {% if email_enable %}
+  {% if count == 0 %}
+  {% assign active_otp_type = 'email' %}
+  {% endif %}
+  <div class="input-box-content email-inner{% if count == 0 %} active{% endif %}" data-current="email">
+    <input class="olInput user-name-input" placeholder="{{email_placeholder}}" maxlength="" name="email" type="email"/>
+  </div>
+  {% assign count = count | plus: 1 %}
+  {% endif %}
+  {% if whatsapp_enable %}
+  {% if count == 0 %}
+  {% assign active_otp_type = 'whatsapp' %}
+  {% endif %}
+  <div class="input-box-content whatsapp-no-inner{% if count == 0 %} active{% endif %}" data-current="whatsapp">
+    {{ country_html }}
+    <input class="olInput user-name-input" placeholder="{{whatsapp_placeholder}}" maxlength="10" name="whatsapp" type="number"/>
+  </div>
+  {% assign count = count | plus: 1 %}
+  {% endif %}
+</div>
+{% endcapture %}
+
+{% assign marketing_count = 0 %}
+{% capture marketing_options_html %}
+{% if section.settings.email_offer_enable %}
+<div class="update-checkbox">
+  <input class="input-checkbox" type="checkbox" value="1" checked="checked" name="" id="email-marketing" />
+  <label class="checkbox-label" for="email-marketing">Email</label>
+</div>
+{% assign marketing_count = marketing_count | plus: 1 %}
+{% endif %}
+{% if section.settings.sms_offer_enable %}
+<div class="update-checkbox">
+  <input class="input-checkbox" type="checkbox" value="1" checked="checked" name="" id="phone-marketing" />
+  <label class="checkbox-label" for="phone-marketing">Phone</label>
+</div>
+{% assign marketing_count = marketing_count | plus: 1 %}
+{% endif %}
+{% if section.settings.whatsapp_offer_enable %}
+<div class="update-checkbox">
+  <input class="input-checkbox" type="checkbox" value="1" checked="checked" name="" id="whatsapp-marketing" />
+  <label class="checkbox-label" for="whatsapp-marketing">Whatsapp</label>
+</div>
+{% assign marketing_count = marketing_count | plus: 1 %}
+{% endif %}
+{% endcapture %}
+
+<div class="simply-otp-wrapper" style="--otp-login-btn-color:{% if section.settings.btn_bg_color %}{{section.settings.btn_bg_color}}{% else %}#1E418E{% endif %}">
+  <div class="olWrapper" data-selected-country="{{default_country_selected}}">
+    <div class="ol">
+      <script>
+        window.myFirebaseApi = {{ shop.metafields.simply-otp-login.firebase_config }};
+      </script>
+      <div id="recaptcha-container"></div>
+      <input type="hidden" class="olInput myShopifyDomain"  name="myShopifyDomain" value="{{ shop.permanent_domain }}">
+      {% if section.settings.image_enabled %}
+      <div class="login-img">
+        {% if section.settings.image != blank %}
+        <img src={{ section.settings.image | img_url: 'master' }} alt="login"/>
+        {% else %}
+        <img src="https://cdn.shopify.com/s/files/1/0589/1751/9521/files/Login-rafiki_1.png?v=1651486937" alt="login"/>
+        {% endif %}
+      </div>
+      {% endif %}
+      <div class="login-box step-box-wrapper" data-active="{{active_otp_type}}">
+        <h1 class="login-header">{{ login_title }}</h1>
+        <p class="login-description">
+          Login to get assured cashbacks and rewards!
+        </p>
+        <hr>
+        {% if count > 1 %}
+        <div class="other-options-box">
+          <div class="other-options-wrap">
+            {% if email_enable %}
+            <div class="other-option-inner email-inner" data-current="email">
+              <p class="text-wrap">
+                Email
+              </p>
+            </div>
+            {% endif %}
+            
+            {% if phone_enable %}
+            <div class="other-option-inner mobile-no-inner" data-current="mobile">
+              
+              <p class="text-wrap">
+                Phone
+              </p>
+            </div>
+            {% endif %}
+          </div>
+        </div>
+        {% endif %}
+        {{ otp_type_html }}
+        <button class="send-btn otp-btn">
+          <span>Continue</span>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M5 12H19" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M12 5L19 12L12 19" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+              {% if count > 1 %}
+        <div class="other-options-box">
+          
+          <div class="other-options-wrap">
+            {% if whatsapp_enable %}
+            <div class="other-option-inner whatsapp-no-inner" data-current="whatsapp">
+              <p class="other-options-p"><span>Or <br> Login Using</span></p>
+              <p class="text-wrap">
+                {% render 'icon' with 'whatsapp' %} Whatsapp
+              </p>
+            </div>
+            {% endif %}
+          </div>
+        </div>
+        {% endif %}
+        
+      </div>
+
+      <div class="update-user-box step-box-wrapper hide">
+        <h1 class="login-header">{{ account_title }}</h1>
+        <div class="login-inputBox">
+          <div class="input-box-content">
+            <input id="first-name" class="olInput update-user-first-name-input" maxlength="" name="name" type="text">
+            <label for="first-name" class="input__label">First Name</label>
+          </div>
+        </div>
+        <div class="login-inputBox">
+          <div class="input-box-content">
+            <input id="last-name" class="olInput update-user-last-name-input" maxlength="" name="name" type="text">
+            <label for="last-name" class="input__label">Last Name</label>
+          </div>
+        </div>
+        <div class="login-inputBox">
+          <div class="input-box-content">
+            <input id="email-id" class="olInput update-user-email-input" maxlength="" name="email" type="email" required>
+            <label for="email-id" class="input__label">Email</label>
+          </div>
+        </div>
+        <span class="error-message hide">Please enter a valid email</span>
+        <div class="login-inputBox">
+          <div class="input-box-content">
+            <input id="phone-number" class="olInput update-user-phone-input" maxlength="10" size="10" name="phone_no" type="text">
+            <label for="phone-number" class="input__label">Phone Number</label>
+          </div>
+        </div>
+        <span class="error-message-phone hide">Please enter a valid Phone Number</span>
+
+
+
+
+
+        
+<!--         CUSTOM FEILDS FOR REGISTRATION START -->
+        <div class="login-inputBox Form__Item DOB">
+        <input type="date" id="dateofbirth" class="Form__Input" name="customer[note][DOB]" placeholder="" required="required"/>
+      </div>
+      <div class="login-inputBox Form__Item catee">
+  <select name="customer[note][prefered category]" id="cate" class="Form__Input" placeholder="Preferred category" required="required">
+    <option value="" disabled selected>Select your Category</option>
+    <option value="Shave">Shave</option>
+      <option value="Beard">Beard</option>
+    <option value="Bath">Bath</option>
+    <option value="Skin">skin</option>
+  </select>
+      </div>
+      <div class="login-inputBox gnder">
+        <label>
+          <input type="radio" name="customer[note][gender]" value="Male" checked/>
+          <div class="front-end box">
+            <span>Male</span>
+          </div>
+        </label>
+        <label>
+          <input type="radio" name="customer[note][gender]" value="Female"/>
+          <div class="back-end box">
+            <span>Female</span>
+          </div>
+        </label>
+        <label>
+          <input type="radio" name="customer[note][gender]" value="Preferred not to say"/>
+          <div class="front-end box">
+            <span>Preferred Not To Say</span>
+          </div>
+        </label>
+      </div>
+<!--         CUSTOM FEILDS FOR REGISTRATION END -->
+
+
+
+        
+        <input class="otp-id" name="otp_id" type="hidden">
+        {% if marketing_count != 0 %}
+        <div class="update-checkbox-wrapper">
+          <p class="checkbox-main-label">{{ marketing_text }}</p>
+          {{ marketing_options_html }}
+        </div>
+        {% endif %}
+        <div class="button-wrapper">
+          <button class="send-btn update-btn otp-btn">
+            <span>Update</span>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M5 12H19" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M12 5L19 12L12 19" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          {% comment %}
+          {% if section.settings.show_skip_btn %}
+          <span class="span-text skip-btn">
+            Skip now
+          </span>
+          {% endif %}
+          {% endcomment %}
+        </div>
+      </div>
+
+      <div class="verify-box step-box-wrapper hide">
+        <h3>{{ otp_title }}</h3>
+        <p class="verify-box-details">The verification OTP is sent on <span>Mobile number</span></p>
+        <div class="mn-container">
+          <p class="mn" id="mn">+91 999999999</p>
+          <svg class="edit-phone bi bi-pencil-fill" fill="currentColor" height="16" viewbox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z"/>
+          </svg>
+        </div>
+        <input class="verify-otp-id" name="olOtpId" type="hidden">
+        <input class="phoneNo" name="phoneNo" type="hidden">
+        <div class="verify-content">
+          <input type="tel" id="otp-input-main" autocomplete="one-time-code" class="otp-input otp6" maxlength="6" />
+        </div>
+        <button class="verify-btn otp-btn">
+          <span>Verify OTP</span>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M5 12H19" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M12 5L19 12L12 19" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <div class="resend-otp" id="resend-otp">
+          <p>Didn't Receive the OTP?</p>
+          <a class="resend-btn disabled">Resend OTP</a>
+          <p class="count-down-otp"></p>
+        </div>
+      </div>
+    </div>
+    <div class="loader">
+      <div class="loader-innerDiv"></div>
+    </div>
+  </div>
+</div>
+<div id="otp-original-login" style="display:none">
+  {%- form 'customer_login', name: 'login', class: 'form' -%}
+  <input type="email" id="otp-original-email" name="customer[email]">
+  <input type="password" id="otp-original-password" name="customer[password]">
+  <input type="hidden" name="return_to" id="otp-return_to">
+  <button type="submit" id="otp-original-submit">Login</button>
+  {%- endform -%}
+</div>
+
+<style>
+  .simply-otp-wrapper {
+    display: none;
+  }
+</style>
+<script>
+  window.simplyOtp = window.simplyOtp || {};
+  simplyOtp.cartJson = {{ cart | json }};
+  let olWrapper = document.querySelector('.olWrapper');
+  olWrapper.style.display = "none"; /* you have to first diplay none to olWrapper because in case css is not attached then whole style is distrubed */
+  /* Load css */
+  var cssId = 'myCss';  // you could encode the css path itself to generate id..
+  if (!document.getElementById(cssId)) {
+    var head = document.getElementsByTagName('head')[0];
+    var link = document.createElement('link');
+    link.id = cssId;
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = "{{'otp-login.css' | asset_url}}";
+    link.media = 'all';
+    head.appendChild(link);
+    document.querySelector('.simply-otp-wrapper').style['display'] = "block";
+  }
+  if (Shopify.designMode) {
+    document.addEventListener("shopify:section:load", () => {
+                              document.querySelector('.simply-otp-wrapper').style['display'] = "block";
+    let olWrapperDiv = document.querySelector('.olWrapper'); // Parent element
+    if (olWrapperDiv) { // To check css is available in the DOM or not
+      olWrapperDiv.style.display = "flex"; //If available then change olWrapper display property
+    }
+  });
+  }
+</script>
+<script src="{{'otp-login.js' | asset_url}}" type="text/javascript" defer="defer"></script>
+{% schema %}
+  {
+    "name": "Simply OTP",
+      "tag": "section",
+        "class": "section",
+          "settings": [
+            {
+              "type": "checkbox",
+              "id": "image_enabled",
+              "label": "Enable Image",
+              "default" : true
+            },
+            {
+              "type": "image_picker",
+              "id": "image",
+              "label": "Image"
+            },
+            {
+              "type": "color",
+              "id": "btn_bg_color",
+              "label": "Button background color",
+              "default":"#1E418E"
+            },
+            {
+              "type": "color",
+              "id": "btn_text_color",
+              "label": "Button text color",
+              "default":"#ffffff"
+            },
+            {
+              "type":"header",
+              "content":"Login step"
+            },
+            {
+              "type":"checkbox",
+              "id":"phone_enable",
+              "label":"Enable phone field",
+              "default":true
+            },
+            {
+              "type":"checkbox",
+              "id":"email_enable",
+              "label":"Enable email field",
+              "default":true
+            },
+            {
+              "type":"checkbox",
+              "id":"whatsapp_enable",
+              "label":"Enable whatsapp field",
+              "default":true
+            },
+            {
+              "type":"text",
+              "id":"login_title",
+              "label":"Title",
+              "default":"Login with OTP"
+            },
+            {
+              "type":"text",
+              "id":"login_sub_title",
+              "label":"Sub title",
+              "default":"Enter your log in Credentials"
+            },
+            {
+              "type":"text",
+              "id":"phone_placeholder",
+              "label":"Phone placeholder",
+              "default":"Phone number"
+            },
+            {
+              "type":"text",
+              "id":"email_placeholder",
+              "label":"Email placeholder",
+              "default":"Email id"
+            },
+            {
+              "type":"text",
+              "id":"whatsapp_placeholder",
+              "label":"Whatsapp placeholder",
+              "default":"Whatsapp number"
+            },
+            {
+              "type":"header",
+              "content":"Enter OTP step"
+            },
+            {
+              "type":"text",
+              "id":"otp_title",
+              "label":"Title",
+              "default":"Enter OTP"
+            },
+            {
+              "type":"header",
+              "content":"Account step"
+            },
+            {
+              "type":"checkbox",
+              "id":"sms_offer_enable",
+              "label":"Enable sms marketing",
+              "default":true
+            },
+            {
+              "type":"checkbox",
+              "id":"email_offer_enable",
+              "label":"Enable email marketing",
+              "default":true
+            },
+            {
+              "type":"checkbox",
+              "id":"whatsapp_offer_enable",
+              "label":"Enable whatsapp marketing",
+              "default":true
+            },
+            {
+              "type":"text",
+              "id":"account_title",
+              "label":"Title",
+              "default":"Account Details"
+            },
+            {
+              "type":"text",
+              "id":"marketing_text",
+              "label":"Marketing option text",
+              "default":"keep me updated on new updates, exclusive offers, periodical blogs, and everything else on."
+            }
+          ],
+            "presets": [
+              {
+                "name": "Simply OTP"
+              }
+            ]
+  }
+{% endschema %}
