@@ -650,7 +650,13 @@
 <div class="section-2" id="section-2">
   <div class="login">
     <h2>Join India’s biggest<br>entrepreneurship challenge</h2>
+    {% comment %}
     {% render 'custom-razorpreneur-form' %}
+    {% endcomment %}
+    {% section 'otp-login' %}
+    <script>
+      window.simplyOtp.settings.pageUrl = location.href;
+    </script>
   </div>
 </div>
 <div
