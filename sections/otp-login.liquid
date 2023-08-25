@@ -16,25 +16,24 @@
       100% { transform: rotate(360deg); }
     }
     </style>
-
-<div class="otp-loader">&nbsp;</div>
+    <div class="otp-loader">&nbsp;</div>
     {% endif %}
-  <script>
-  if(location.hash == "#ref=gokwik"){
-    window.addEventListener("load", (event) => {
-      setTimeout(function(){
-        window.gokwikSdk.initCheckout(merchantInfo);
-      }, 4000);
-    });
-  }
-
-  if(location.hash.indexOf("#razor=page")){
-    {% if customer.tags contains 'Razorpreneur' %}
-    {% else %}
-      location.href = "/account";
-    {% endif %}
-  }
-</script>
+    <script>
+      if(location.hash == "#ref=gokwik"){
+        window.addEventListener("load", (event) => {
+          setTimeout(function(){
+            window.gokwikSdk.initCheckout(merchantInfo);
+          }, 4000);
+        });
+      }
+    
+      if(location.hash.indexOf("#razor=page")){
+        {% if customer.tags contains 'Razorpreneur' %}
+        {% else %}
+          location.href = "/account";
+        {% endif %}
+      }
+    </script>
 {% else %}
   <style>
     .simply-otp-wrapper {
