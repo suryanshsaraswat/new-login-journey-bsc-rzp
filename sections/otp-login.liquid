@@ -16,7 +16,10 @@
       100% { transform: rotate(360deg); }
     }
     </style>
-<script>
+
+<div class="otp-loader">&nbsp;</div>
+    {% endif %}
+  <script>
   if(location.hash == "#ref=gokwik"){
     window.addEventListener("load", (event) => {
       setTimeout(function(){
@@ -32,8 +35,6 @@
     {% endif %}
   }
 </script>
-<div class="otp-loader">&nbsp;</div>
-    {% endif %}
 {% else %}
   <style>
     .simply-otp-wrapper {
