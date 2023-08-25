@@ -24,6 +24,13 @@
       }, 4000);
     });
   }
+
+  if(location.hash.indexOf("#razor=page")){
+    {% if customer.tags contains 'Razorpreneur' %}
+    {% else %}
+      location.href = "/account";
+    {% endif %}
+  }
 </script>
 <div class="otp-loader">&nbsp;</div>
     {% endif %}
