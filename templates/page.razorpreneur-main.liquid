@@ -3,6 +3,13 @@
   div#cntl-placeholder-form-fixed-item {
     display: none !important;
   }
+  button.send-btn.otp-btn {
+    background: #00BED6!important;
+    padding: 12px!important;
+    font-family: Roboto,sans-serif;
+    font-size: 17px!important;
+    text-transform: uppercase;
+}
   .desktop-banner {
     display: block;
   }
@@ -663,7 +670,7 @@
   class="main-prod-section"
   id="show-jq"
   {% if customer %}
-  
+
   {% else %}
   style="display:none"
   {% endif %}>
@@ -1050,7 +1057,7 @@ if (localStorage.getItem("formSubmitted") === "true") {
   formFeilds.style.display = "none";
   applyNow1.style.display = "none";
   applyNow2.style.display = "none";
-  
-  
+
+
 }
 </script>
