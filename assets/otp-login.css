@@ -24,3 +24,6 @@
 .simply-otp-wrapper .olWrapper .ol .login-box .input-box-content, .simply-otp-wrapper .olWrapper .ol .update-user-box .input-box-content, .sotp-widget .olWrapper .ol .login-box .input-box-content, .sotp-widget .olWrapper .ol .update-user-box .input-box-content {
     border-radius: 30px;
 }
+.simply-otp-wrapper .olWrapper .ol .otp-btn, .sotp-widget .olWrapper .ol .otp-btn {
+    border-radius: 30px;
+}
