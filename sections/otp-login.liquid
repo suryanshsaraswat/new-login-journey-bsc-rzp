@@ -19,7 +19,7 @@
     <div class="otp-loader">&nbsp;</div>
     {% endif %}
     <script>
-      if(location.hash == "#ref=gokwik"){
+      if(location.hash.indexOf("#ref=gokwik")  != -1 ){
         window.addEventListener("load", (event) => {
           setTimeout(function(){
             window.gokwikSdk.initCheckout(merchantInfo);
@@ -27,7 +27,7 @@
         });
       }
     
-      if(location.hash.indexOf("#razor=page")){
+      if(location.hash.indexOf("#razor=page") != -1 ){
         {% if customer.tags contains 'Razorpreneur' %}
         {% else %}
           location.href = "/account";
