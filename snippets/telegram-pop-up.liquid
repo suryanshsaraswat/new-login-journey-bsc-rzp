@@ -1,6 +1,8 @@
 <style>
+    .popup-mobile{display: none;}
     @media(max-width:450px){
-        .custom-popup-overlay {
+ .popup-mobile{display: block;}
+    .custom-popup-overlay {
     display: none;
     position: fixed;
     top: 0;
@@ -26,10 +28,10 @@
 
   .custom-popup-content {
     padding: 10px;
-    min-height:280px
+    min-height:300px
   }
   .custom-popup-content h2{text-align: center;margin-top: 20px;}
-  a#custom-popup-button{max-width: 100%;display: block;width: 200px;margin: 0 auto;background: #007783;color: #fff;margin-top: -10px;padding: 7px 0;border-radius: 5px;}
+  a#custom-popup-button{max-width: 100%;display: block;width: 200px;margin: 0 auto;background: #007783;color: #fff;margin-top: -10px;padding: 7px 0;border-radius: 5px;text-align: center;text-transform: uppercase;font-weight: 600;}
   button#custom-popup-close {
     position: absolute;
     top: 6px;
@@ -76,6 +78,7 @@ div#custom-popup p {
 
     }
 </style>
+<div class="popup-mobile">
 <div class="custom-popup-overlay" id="custom-popup-overlay"></div>
 <div id="custom-popup" class="custom-popup">
   <div class="custom-popup-content">
@@ -84,6 +87,7 @@ div#custom-popup p {
     <p>Join our group<br>for more value saving offers!</p>
     <a href= "https://t.me/bombayshavingco" id="custom-popup-button">join now</a>
   </div>
+</div>
 </div>
 <script>
   document.addEventListener("DOMContentLoaded", function () {
