@@ -343,23 +343,7 @@ gtag('config','AW-881045097', {'allow_enhanced_conversions':true});
   {%- endif -%}
 
   <body class="prestige--v4 {{ classes }} {% if template.directory %}template-{{ template.directory | handle }}{% endif %} template-{{ template.name | handle }} a{{ page.id }} prod-{{ product.id }}" id="jsfun">
-   {% comment %} {% if template == 'index' %}
-          <!--Preloader -->
-          <style>
-            #preloader {position: fixed;top: 0;left: 0;width: 100%;height: 100%;background-color: #03ddfe;display: flex;justify-content: center;align-items: center; z-index: 9999;transition:0.4s}
-            #preloader img {max-width: 400px; max-height: 400px; }
-          </style>
-     <div id="preloader"><img src="https://cdn.shopify.com/s/files/1/0459/6563/9834/files/BSC_gif_Loader_2.gif?v=1690912588" alt="Preloader Image"></div>
-         <script>
-           window.addEventListener("load", function() {
-             document.getElementById("preloader").style.display = "flex";
-             setTimeout(function() {
-               document.getElementById("preloader").style.display = "none";
-             }, 500);
-           });
-         </script>
-          <!--Preloader end -->
-          {% endif %}{% endcomment %}
+    {% render 'telegram-pop-up' %}
     {%- comment -%}Common SVG definitions that we are re-using in several places{%- endcomment -%}
     <svg class="u-visually-hidden">
       <linearGradient id="rating-star-gradient-half">
