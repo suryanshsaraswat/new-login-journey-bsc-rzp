@@ -27,6 +27,19 @@
   .custom-popup-content {
     padding: 10px;
   }
+  button#custom-popup-close {
+    position: absolute;
+    top: 6px;
+    right: 13px;
+    padding: 1px 5px;
+    color: #000;
+    background: #fff;
+    border-radius: 7px;
+}
+div#custom-popup p {
+    text-align: center;
+    padding-top: 63px;
+}
 
   .custom-popup.slide-up {
     animation: custom-slide-up 0.5s ease-out forwards;
@@ -60,7 +73,7 @@
 <div id="custom-popup" class="custom-popup">
   <div class="custom-popup-content">
     <button class="custom-popup-close" id="custom-popup-close">Close</button>
-    <p>Your popup content goes here.</p>
+    <p>Join our group<br>for more value saving offers!</p>
     <button id="custom-popup-button">Click me</button>
   </div>
 </div>
