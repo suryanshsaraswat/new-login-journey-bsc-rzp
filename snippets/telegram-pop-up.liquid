@@ -1,5 +1,6 @@
 <style>
-  .custom-popup-overlay {
+    @media(max-width:450px){
+        .custom-popup-overlay {
     display: none;
     position: fixed;
     top: 0;
@@ -19,6 +20,8 @@
     background-color: #fff;
     border-top: 1px solid #ccc;
     z-index: 2;
+    border-radius: 20px;
+    background-color: #deefff;
   }
 
   .custom-popup-content {
@@ -50,6 +53,8 @@
       transform: translateY(100%);
     }
   }
+
+    }
 </style>
 <div class="custom-popup-overlay" id="custom-popup-overlay"></div>
 <div id="custom-popup" class="custom-popup">
