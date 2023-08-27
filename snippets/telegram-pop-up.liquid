@@ -1,0 +1,69 @@
+<style>
+  .custom-popup {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #fff;
+    border-top: 1px solid #ccc;
+  }
+
+  .custom-popup-content {
+    padding: 10px;
+  }
+
+  .custom-popup.slide-up {
+    animation: custom-slide-up 0.5s ease-out forwards;
+  }
+
+  .custom-popup.slide-down {
+    animation: custom-slide-down 0.5s ease-out forwards;
+  }
+
+  @keyframes custom-slide-up {
+    from {
+      transform: translateY(100%);
+    }
+    to {
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes custom-slide-down {
+    from {
+      transform: translateY(0);
+    }
+    to {
+      transform: translateY(100%);
+    }
+  }
+</style>
+<div id="custom-popup" class="custom-popup">
+  <div class="custom-popup-content">
+    <p>Your popup content goes here.</p>
+    <button id="custom-popup-button">Click me</button>
+  </div>
+</div>
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const customPopup = document.getElementById("custom-popup");
+    const customPopupButton = document.getElementById("custom-popup-button");
+
+    if (!localStorage.getItem("customPopupClicked")) {
+      setTimeout(() => {
+        customPopup.classList.add("slide-up");
+        customPopup.style.display = "block";
+      }, 5000);
+    }
+
+    customPopupButton.addEventListener("click", function() {
+      localStorage.setItem("customPopupClicked", "true");
+
+      customPopup.classList.add("slide-down");
+      setTimeout(() => {
+        customPopup.style.display = "none";
+      }, 500);
+    });
+  });
+</script>
