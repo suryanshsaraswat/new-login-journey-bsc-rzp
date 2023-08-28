@@ -1599,7 +1599,15 @@
       });
   }
 
-  window.simplyOtp.changeCollegeSelection
+  window.simplyOtp.changeCollegeSelection = function(){
+    let str = $('#college_student select').val();
+    if( str == "yes"){
+      $('.custom_field.category').show();
+    }
+    else{
+      $('.custom_field.category').hide();
+    }
+  }
   
     window.simplyOtp.initializeCss = () => {
       simplyOtp.cartJson = {{ cart | json }};
