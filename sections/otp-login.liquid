@@ -1455,7 +1455,7 @@
             <div class="custom_field college_student">
                 <label>Are you a college student ?</label>
                 <div class="custom_select">
-                    <select name="Are" you="" a="" college="" student="" ?="" onchange="changeCollegeSelection()">
+                    <select name="Are" you="" a="" college="" student="" ?="" onchange="window.simplyOtp.changeCollegeSelection()">
                         <option value="">Are you a college student ?</option>
                         
                     <option value="Yes">
@@ -1598,6 +1598,8 @@
           input.value = sourceInput.value;
       });
   }
+
+  window.simplyOtp.changeCollegeSelection
   
     window.simplyOtp.initializeCss = () => {
       simplyOtp.cartJson = {{ cart | json }};
