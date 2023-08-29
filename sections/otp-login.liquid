@@ -30,7 +30,7 @@
       if(location.hash.indexOf("#razor=page") != -1 ){
         {% if customer.tags contains 'Razorpreneur' %}
           setTimeout(function(){
-            const element = document.getElementById("buy-section-2");
+            const element = document.getElementById("show-jq");
             element.scrollIntoView({behavior: "smooth"});
           }, 2000);
         {% else %}
