@@ -31,7 +31,9 @@
         {% if customer.tags contains 'Razorpreneur' %}
           setTimeout(function(){
             const element = document.getElementById("show-jq");
-            element.scrollIntoView({behavior: "smooth"});
+            if(element){
+              element.scrollIntoView({behavior: "smooth"});
+            }
           }, 2000);
         {% else %}
           location.href = "/account";
