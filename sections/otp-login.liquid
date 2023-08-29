@@ -29,6 +29,10 @@
     
       if(location.hash.indexOf("#razor=page") != -1 ){
         {% if customer.tags contains 'Razorpreneur' %}
+          setTimeout(function(){
+            const element = document.getElementById("buy-section-2");
+            element.scrollIntoView({behavior: "smooth"});
+          }, 2000);
         {% else %}
           location.href = "/account";
         {% endif %}
