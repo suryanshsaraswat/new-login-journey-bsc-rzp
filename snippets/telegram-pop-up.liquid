@@ -127,30 +127,22 @@ document.addEventListener("DOMContentLoaded", function () {
     customPopup.classList.add("slide-up");
     customPopupOverlay.style.display = "block";
     customPopup.style.display = "block";
-
-    // Set a cookie to prevent the popup from showing again
-    setCookie("customPopupClicked", "true", 7); // The "7" here represents the number of days the cookie will persist
+    setCookie("customPopupClicked", "true", 30);
   }
-
-  // Check if the "customPopupClicked" cookie is not set before showing the popup
   if (!getCookie("customPopupClicked")) {
     setTimeout(showPopup, 5000);
   }
 
   customPopupButton.addEventListener("click", function () {
-    // Set a cookie to mark that the user clicked the button
-    setCookie("customPopupClicked", "true", 7); // The "7" here represents the number of days the cookie will persist
+    setCookie("customPopupClicked", "true", 30);
     hidePopup();
   });
-
   customPopupClose.addEventListener("click", function () {
     hidePopup();
   });
-
   customPopupOverlay.addEventListener("click", function () {
     hidePopup();
   });
-
   function hidePopup() {
     customPopup.classList.add("slide-down");
     setTimeout(() => {
