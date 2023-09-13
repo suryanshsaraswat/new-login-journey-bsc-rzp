@@ -90,41 +90,73 @@ div#custom-popup p {
 </div>
 </div>
 <script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const customPopup = document.getElementById("custom-popup");
-    const customPopupButton = document.getElementById("custom-popup-button");
-    const customPopupClose = document.getElementById("custom-popup-close");
-    const customPopupOverlay = document.getElementById("custom-popup-overlay");
+  // Function to set a cookie
+function setCookie(name, value, days) {
+  var expires = "";
+  if (days) {
+    var date = new Date();
+    date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+    expires = "; expires=" + date.toUTCString();
+  }
+  document.cookie = name + "=" + value + expires + "; path=/";
+}
 
-    function showPopup() {
-      customPopup.classList.add("slide-up");
-      customPopupOverlay.style.display = "block";
-      customPopup.style.display = "block";
+// Function to get a cookie value
+function getCookie(name) {
+  var nameEQ = name + "=";
+  var cookies = document.cookie.split(";");
+  for (var i = 0; i < cookies.length; i++) {
+    var cookie = cookies[i];
+    while (cookie.charAt(0) == " ") {
+      cookie = cookie.substring(1, cookie.length);
     }
-
-    function hidePopup() {
-      customPopup.classList.add("slide-down");
-      setTimeout(() => {
-        customPopupOverlay.style.display = "none";
-        customPopup.style.display = "none";
-      }, 500);
+    if (cookie.indexOf(nameEQ) == 0) {
+      return cookie.substring(nameEQ.length, cookie.length);
     }
+  }
+  return null;
+}
 
-    if (!localStorage.getItem("customPopupClicked")) {
-      setTimeout(showPopup, 5000);
-    }
+document.addEventListener("DOMContentLoaded", function () {
+  const customPopup = document.getElementById("custom-popup");
+  const customPopupButton = document.getElementById("custom-popup-button");
+  const customPopupClose = document.getElementById("custom-popup-close");
+  const customPopupOverlay = document.getElementById("custom-popup-overlay");
 
-    customPopupButton.addEventListener("click", function () {
-      localStorage.setItem("customPopupClicked", "true");
-      hidePopup();
-    });
+  function showPopup() {
+    customPopup.classList.add("slide-up");
+    customPopupOverlay.style.display = "block";
+    customPopup.style.display = "block";
 
-    customPopupClose.addEventListener("click", function () {
-      hidePopup();
-    });
+    // Set a cookie to prevent the popup from showing again
+    setCookie("customPopupClicked", "true", 7); // The "7" here represents the number of days the cookie will persist
+  }
 
-    customPopupOverlay.addEventListener("click", function () {
-      hidePopup();
-    });
+  // Check if the "customPopupClicked" cookie is not set before showing the popup
+  if (!getCookie("customPopupClicked")) {
+    setTimeout(showPopup, 5000);
+  }
+
+  customPopupButton.addEventListener("click", function () {
+    // Set a cookie to mark that the user clicked the button
+    setCookie("customPopupClicked", "true", 7); // The "7" here represents the number of days the cookie will persist
+    hidePopup();
   });
+
+  customPopupClose.addEventListener("click", function () {
+    hidePopup();
+  });
+
+  customPopupOverlay.addEventListener("click", function () {
+    hidePopup();
+  });
+
+  function hidePopup() {
+    customPopup.classList.add("slide-down");
+    setTimeout(() => {
+      customPopupOverlay.style.display = "none";
+      customPopup.style.display = "none";
+    }, 500);
+  }
+});
 </script>
