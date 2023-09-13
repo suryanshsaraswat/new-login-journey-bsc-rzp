@@ -127,22 +127,27 @@ document.addEventListener("DOMContentLoaded", function () {
     customPopup.classList.add("slide-up");
     customPopupOverlay.style.display = "block";
     customPopup.style.display = "block";
-    setCookie("customPopupClicked", "true", 30);
-  }
-  if (!getCookie("customPopupClicked")) {
-    setTimeout(showPopup, 5000);
   }
 
   customPopupButton.addEventListener("click", function () {
-    setCookie("customPopupClicked", "true", 30);
+    // Set a cookie when the button is clicked to prevent the popup from showing again
+    setCookie("telegramPopupClicked", "true", 7); // The "7" here represents the number of days the cookie will persist
     hidePopup();
   });
+
+  // Check if the "telegramPopupClicked" cookie is not set before showing the popup
+  if (!getCookie("telegramPopupClicked")) {
+    setTimeout(showPopup, 5000);
+  }
+
   customPopupClose.addEventListener("click", function () {
     hidePopup();
   });
+
   customPopupOverlay.addEventListener("click", function () {
     hidePopup();
   });
+
   function hidePopup() {
     customPopup.classList.add("slide-down");
     setTimeout(() => {
@@ -151,4 +156,5 @@ document.addEventListener("DOMContentLoaded", function () {
     }, 500);
   }
 });
+
 </script>
