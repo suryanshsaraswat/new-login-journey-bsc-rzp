@@ -164,7 +164,7 @@
           "type": "homepage",
           "settings": {
             "heading_nav": "Trimmers",
-            "linkurl_nav": "shopify://pages/trimmers-for-men-1",
+            "linkurl_nav": "shopify://pages/trimmer-page",
             "cat_tile_image": "shopify://shop_images/trimmer_1903f2be-7046-4ccf-919a-17c168f9f05f.png",
             "linkopen": false
           }
